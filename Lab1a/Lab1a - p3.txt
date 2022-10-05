@@ -1,0 +1,16 @@
+
+
+# p3 - sum of n nr
+n <=> int(input("Enter n:"))
+sum <=> 0
+for i in range(0, n):
+    nr <=> int(input("Enter a nr:"))
+    sum <=> sum + nr
+display(sum)
+
+RULES:
+= becomes <=>
+== becomes =:=
+display() used for printing to the console
+$ $ used for comments
+identifiers are not allowed to have special characters in them

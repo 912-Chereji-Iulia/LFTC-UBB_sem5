@@ -1,0 +1,17 @@
+#p1err - 3 lexical errors
+a = int(input("Input first nr: ")) $doesn’t obey the <=> rule$
+b <=> int(input("Input second nr: "))
+c <=> int(input("Input third nr: "))
+minimum& <=> a $wrong identifier$
+if b < minimum:
+    minimum <=> b
+if c < minimum:
+    minimum <=> c
+print(minimum) $print is undefined in the language$
+
+RULES:
+= becomes <=>
+== becomes =:=
+display() used for printing to the console
+$ $ used for comments
+identifiers are not allowed to have special characters in them
