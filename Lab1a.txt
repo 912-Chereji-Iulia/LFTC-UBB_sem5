@@ -1,0 +1,50 @@
+# p1-compute min of 3 nr
+
+a <=> int(input("Input first nr: "))
+b <=> int(input("Input second nr: "))
+c <=> int(input("Input third nr: "))
+minimum <=> a
+if b < minimum:
+    minimum <=> b
+if c < minimum:
+    minimum <=> c
+display(minimum)
+
+# p2- gcd of 2 nr
+
+a <=> int(input("First nr: "))
+b <=> int(input("Second nr: "))
+if a > b:
+    minimum <=> b
+else:
+    minimum <=> a
+for i in range(1, minimum + 1):
+    if (a % i =:= 0) and (b % i =:= 0):
+        gcd = i
+display(gcd)
+
+# p3 - sum of n nr
+n <=> int(input("Enter n:"))
+sum <=> 0
+for i in range(0, n):
+    nr <=> int(input("Enter a nr:"))
+    sum <=> sum + nr
+display(sum)
+
+#p1err - 2 lexical errors
+a = int(input("Input first nr: ")) $doesn’t obey the <=> rule$
+b <=> int(input("Input second nr: "))
+c <=> int(input("Input third nr: "))
+minimum& <=> a $wrong identifier$
+if b < minimum:
+    minimum <=> b
+if c < minimum:
+    minimum <=> c
+print(minimum) $print is undefined in the language$
+
+RULES:
+= becomes <=>
+== becomes =:=
+display() used for printing to the console
+$ $ used for comments
+identifiers are not allowed to have special characters in them
