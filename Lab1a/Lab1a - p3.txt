@@ -1,10 +1,14 @@
 
-
 # p3 - sum of n nr
-n <=> int(input("Enter n:"))
+
+variable n ^ int
+variable i ^ int
+variable sum ^ int
+variable nr ^ int
+n <=> input("Enter n:")
 sum <=> 0
 for i in range(0, n):
-    nr <=> int(input("Enter a nr:"))
+    nr <=> input("Enter a nr:")
     sum <=> sum + nr
 display(sum)
 
@@ -12,5 +16,6 @@ RULES:
 = becomes <=>
 == becomes =:=
 display() used for printing to the console
+input() used for reading from the console
 $ $ used for comments
-identifiers are not allowed to have special characters in them
+identifiers are not allowed to have special characters in them and should contain at least a letter

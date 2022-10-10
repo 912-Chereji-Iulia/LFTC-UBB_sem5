@@ -1,7 +1,11 @@
 # p2- gcd of 2 nr
 
-a <=> int(input("First nr: "))
-b <=> int(input("Second nr: "))
+variable a ^ int
+variable b ^ int
+variable minimum ^ int
+variable gcd ^ int
+a <=> input("First nr: ")
+b <=> input("Second nr: ")
 if a > b:
     minimum <=> b
 else:
@@ -15,5 +19,6 @@ RULES:
 = becomes <=>
 == becomes =:=
 display() used for printing to the console
+input() used for reading from the console
 $ $ used for comments
-identifiers are not allowed to have special characters in them
+identifiers are not allowed to have special characters in them and should contain at least a letter

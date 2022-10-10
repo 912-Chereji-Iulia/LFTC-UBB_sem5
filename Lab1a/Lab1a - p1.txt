@@ -1,8 +1,12 @@
 # p1-compute min of 3 nr
 
-a <=> int(input("Input first nr: "))
-b <=> int(input("Input second nr: "))
-c <=> int(input("Input third nr: "))
+variable a ^ int
+variable b ^ int
+variable c ^ int
+variable minimum ^ int
+a <=> input("Input first nr: ")
+b <=> input("Input second nr: ")
+c <=> input("Input third nr: ")
 minimum <=> a
 if b < minimum:
     minimum <=> b
@@ -14,5 +18,6 @@ RULES:
 = becomes <=>
 == becomes =:=
 display() used for printing to the console
+input() used for reading from the console
 $ $ used for comments
-identifiers are not allowed to have special characters in them
+identifiers are not allowed to have special characters in them and should contain at least a letter
