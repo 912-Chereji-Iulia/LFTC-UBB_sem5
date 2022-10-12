@@ -1,0 +1,35 @@
+Sintactical rules: 
+
+	variable_declaration = "variable" IDENTIFIER "^" type
+
+	type = "char" | "int" | "string" 
+
+	vector_declaration = "vector" IDENTIFIER "<=>" type "[" int_nr "]"
+
+	stmt = variable_declaration | vector_declaration | ifstmt | forstmt | iostmt 
+
+	cmpd_stmt = stmt "/n" [cmpd_stmt]
+
+	assignstmt = IDENTIFIER "<=>" expression
+
+	expression = expression ("+" | "-") term | term 
+
+	term = term ("*" | "/") factor | factor 
+
+	factor = "(" expression ")" | IDENTIFIER | int_number
+
+	readstmt = IDENTIFIER "<=>" "input" "(" string ")"
+
+	writestmt = "display" "(" IDENTIFIER ")"
+
+	iostmt = readstmt | writestmt
+
+	ifstmt = "if" condition ":" cmpd_stmt ["else" ":" cmpd_stmt]
+
+	forstmt = "for" IDENTIFIER "in" "range" "(" IDENTIFIER "," IDENTIFIER ")" ":"
+
+	condition = expression relation expression
+
+	relation = "<" | "<=" | "<=>" | "<>" | ">=" | ">" | "=:="
+
+	
