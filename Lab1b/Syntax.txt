@@ -1,12 +1,14 @@
 Sintactical rules: 
 
+	program = "go" cmpd_stmt "stop"
+
 	variable_declaration = "variable" IDENTIFIER "^" type
 
 	type = "char" | "int" | "string" 
 
-	vector_declaration = "vector" IDENTIFIER "<=>" type "[" int_nr "]"
+	vector_declaration = "vector" IDENTIFIER "[" int_number "]" "==>" type
 
-	stmt = variable_declaration | vector_declaration | ifstmt | forstmt | iostmt 
+	stmt = variable_declaration | vector_declaration | ifstmt | forstmt | iostmt | assignstmt
 
 	cmpd_stmt = stmt "/n" [cmpd_stmt]
 
@@ -30,6 +32,6 @@ Sintactical rules:
 
 	condition = expression relation expression
 
-	relation = "<" | "<=" | "<=>" | "<>" | ">=" | ">" | "=:="
+	relation = "<" | "<=" | "<=>" | "<>" | ">=" | ">" | "=:=" | "==>"
 
 	

@@ -10,6 +10,7 @@ $
 >= 
 =:= 
 != 
+==>
 ; 
 :
 (
@@ -31,6 +32,8 @@ for
 in
 range
 vector
+go
+stop
 A
 B
 C
