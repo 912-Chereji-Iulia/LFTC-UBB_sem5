@@ -17,18 +17,15 @@ class HashTable:
             sumAscii += ord(str(symbol)[i])
         return sumAscii % self._size
 
-    def getPositionInSt(self, symbol):
-        return self.hashFunction(symbol)
-
     def addSymbolToHT(self, symbol):
-        positionInST = self.getPositionInSt(symbol)
+        positionInST = self.hashFunction(symbol)
         if symbol in self._ht[positionInST]:
             return -1
         self._ht[positionInST].append(symbol)
         return positionInST
 
     def getPositionOfSymbol(self, symbol):
-        positionInSt = self.getPositionInSt(symbol)
+        positionInSt = self.hashFunction(symbol)
         if len(self._ht[positionInSt]) == 0:
             return -1
         return positionInSt
