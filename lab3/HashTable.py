@@ -11,7 +11,7 @@ class HashTable:
     def getSymbolOnPos(self, pos):
         return self._ht[pos]
 
-    def hashFunction(self, symbol):  # sum of ascii characters
+    def hashFunction(self, symbol):  # sum of ascii characters % size of hash table
         sumAscii = 0
         for i in range(len(str(symbol))):
             sumAscii += ord(str(symbol)[i])
@@ -25,13 +25,10 @@ class HashTable:
         if symbol in self._ht[positionInST]:
             return -1
         self._ht[positionInST].append(symbol)
-        return positionInST, len(self._ht[positionInST]) - 1
+        return positionInST
 
     def getPositionOfSymbol(self, symbol):
         positionInSt = self.getPositionInSt(symbol)
         if len(self._ht[positionInSt]) == 0:
             return -1
-        allSymbols = self._ht[positionInSt]
-        for posInList in range(len(allSymbols)):
-            if allSymbols[posInList] == symbol:
-                return positionInSt, posInList
+        return positionInSt

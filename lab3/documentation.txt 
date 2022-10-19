@@ -1,6 +1,20 @@
 https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab3
+
 I used to create only one instance of the Symbol table, being unique for identifiers and constants. For its implementation, I created a
-Hash Table having the hash function for a symbol the sum of the ascii codes of all the characters forming the symbol modulo the initial size of
-the hash table, so that it fits in it. The hash table will be a dictionary with the keys being the positions and the values being a list with all
-the symbols on that position. For each symbol then, the position in the ST will be the result of the hash function on the symbol and then,
-on each position, we keep a list of all the symbols that were hashed on that position.
+Hash Table being a dictionary with the keys being the positions and the values being a list with all the symbols hashed on that position.
+For each symbol then, the position in the ST will be the result of the hash function on the symbol.
+
+The getSize() method will return the size of the hash table.
+
+The getSymbolOnPos(pos) will return the symbol on a given position, given as a parameter to the function.
+
+The hashFunction(symbol) method will compute the hash function, being the sum of the ascii codes of all the characters forming the symbol modulo the initial size of
+the hash table, so that it fits in it.
+
+The getPositionInST(symbol) method will call the hashFunction method, returning the position in the symbol table.
+
+The addSymbolToHT(symbol) will check if the given symbol in the definition of the method is already in the hash table. If it is, we won't add it again.
+Otherwise, we get its corresponding position using the getPositionInST method and append it top that list.
+
+The getPositionOfSymbol(symbol) will also check if the symbol exists. If it does, we return its position otherwise, if the list corresponding to that
+position is empty, we return -1 (meaning that the symbol is not in the table)
