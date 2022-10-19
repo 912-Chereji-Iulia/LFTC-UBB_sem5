@@ -6,19 +6,19 @@ Then, for each symbol, the position in the ST will be the result of the hash fun
 
 The getSize() method will return the size of the hash table.
     ->input: nothing
-    ->output: size of the hash table
+    ->output: integer, size of the hash table
 
-The getSymbolOnPos(pos) will return the symbol on a given position, given as a parameter to the function.
+The getSymbolOnPos(pos) will return the symbol on a given position.
     ->input: the position from which we want to get its symbols
     ->output: list of symbols on the wanted position
 
-The hashFunction(symbol) method will compute the hash function, being the sum of the ascii codes of all the characters forming the symbol modulo the initial size of
+The hashFunction(symbol) method will compute the hash function, being the sum of the ascii codes of all the characters forming the symbol modulo the size of
 the hash table, so that it fits in it.
     ->input: a symbol for which we want to compute the hash function
-    ->output: the result of the computation of the hash function, which is a nr btw 0 and size -1
+    ->output: the result of the computation of the hash function, which is a nr btw 0 and size-1
 
 The addSymbolToHT(symbol) will check if the given symbol in the definition of the method is already in the hash table. If it is, we won't add it again.
-Otherwise, we get its corresponding position using the getPositionInST method and append it top that list.
+Otherwise, we get its corresponding position and append it to that list.
     ->input: symbol to be added to the hash table
     ->output: -1 if the symbol is already in the hash table or, otherwise, the position it is hashed to
 
