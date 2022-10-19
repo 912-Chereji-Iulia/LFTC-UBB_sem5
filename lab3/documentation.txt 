@@ -1,5 +1,6 @@
-https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5
+https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab3
 I used to create only one instance of the Symbol table, being unique for identifiers and constants. For its implementation, I created a
 Hash Table having the hash function for a symbol the sum of the ascii codes of all the characters forming the symbol modulo the initial size of
-the symbol table, so that it fits in it. For each symbol then, the position in the ST will be the result of the hash function on the symbol and then,
+the hash table, so that it fits in it. The hash table will be a dictionary with the keys being the positions and the values being a list with all
+the symbols on that position. For each symbol then, the position in the ST will be the result of the hash function on the symbol and then,
 on each position, we keep a list of all the symbols that were hashed on that position.
