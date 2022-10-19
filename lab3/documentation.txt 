@@ -18,3 +18,5 @@ Otherwise, we get its corresponding position using the getPositionInST method an
 
 The getPositionOfSymbol(symbol) will also check if the symbol exists. If it does, we return its position otherwise, if the list corresponding to that
 position is empty, we return -1 (meaning that the symbol is not in the table)
+
+The test_Addition method tests that a nr was added on the corresponding position in the hash table

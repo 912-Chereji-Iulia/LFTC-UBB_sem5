@@ -11,4 +11,3 @@ if __name__ == '__main__':
     print("Position of 1:", st.getPositionOfSymbol(1))
     print("Position of nr:", st.getPositionOfSymbol(nr))
     print("Position of 'ola':", st.getPositionOfSymbol('iulia'))
-
