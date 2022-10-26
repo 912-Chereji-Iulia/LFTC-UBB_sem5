@@ -32,3 +32,6 @@ The isReservedToken(token) checks if the given token is an operator, separator o
     ->input: the token to be checked
     ->output: True if it's an operator/separator/reserved keyword or False otherwise
 
+The scan(fileName) function parses the file given:
+    -> input: the name of the file
+    -> output: the ST, PIF and a message showing if it s a lexical error or not
