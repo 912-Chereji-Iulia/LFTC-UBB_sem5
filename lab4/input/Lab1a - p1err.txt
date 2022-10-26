@@ -11,5 +11,5 @@ if b < minimum:
     minimum <=>/ b
 if c < minimum:
     minimum <=> c
-print(minimum)
+display(minimum)
 stop

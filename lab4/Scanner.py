@@ -78,15 +78,13 @@ class Scanner:
                     i = i + 2
                 elif self.isReservedToken(token):
                     self._pif.addToPIF(token, -1)
-                elif isConst(token) or isIdentifier(token):
-                    if isIdentifier(token) and i < len(data) - 1 and data[i + 1] == '(':
-                        message += 'Lexical error-> token ' + token + ' on line ' + str(lineNr) + "\n"
+                elif isIdentifier(token) or isConst(token):
+                    posInST = self._st.addSymbolToST(token)
+                    if isIdentifier(token):
+                        self._pif.addToPIF('ID', posInST)
                     else:
-                        posInST = self._st.addSymbolToST(token)
-                        if isIdentifier(token):
-                            self._pif.addToPIF('ID', posInST)
-                        else:
-                            self._pif.addToPIF('CONSTANT', posInST)
+                        self._pif.addToPIF('CONSTANT', posInST)
+
                 else:
                     message += 'Lexical error-> token ' + token + ' on line ' + str(lineNr) + "\n"
                 i += 1
