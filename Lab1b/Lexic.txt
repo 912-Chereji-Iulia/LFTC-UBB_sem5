@@ -8,7 +8,7 @@ LEXIC:
 
 a.Special symbols, representing:
 
-    - operators-> + - * / =:= < <= <=>  >= ^ ==>
+    - operators-> + - * / =:= < <= <=>  >= ^ ==> >
 
     - separators-> ( ) : " " [ ] /n
 
