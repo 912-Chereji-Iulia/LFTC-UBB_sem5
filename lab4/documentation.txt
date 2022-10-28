@@ -1,7 +1,7 @@
 https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab4
 
-In order to represent PIF, I used a list of pairs containing the token and its position in the ST.The position is marked as a pair,
-containing it's actual position and the position on the list hashed at the place in the ST
+In order to represent PIF, I used a list of pairs containing the token and its position in the ST. The position is marked as a pair,
+containing its actual position and the position on the list hashed at the place in the ST
 For implementing the Scanner class, I used the ST, the PIF and I took 3 lists: 1 with all the separators, one with all the
 operators and one with the reserved keywords.
 I used 3 external functions that check if a specific token is a constant or an identifier, using regex, or a composed token.

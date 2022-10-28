@@ -57,6 +57,9 @@ class Scanner:
         message = ""
         for line in lines:
             # get all words separated
+            strConst = re.findall('"([^"]*)"', line)
+            comments= re.findall('\$([^"]*)\$', line)
+            # print(strConst)
             dataOnLine = re.split('([^a-zA-Z0-9])', line)
 
             # get rid of blank space and new line characters
@@ -80,7 +83,10 @@ class Scanner:
                     self._pif.addToPIF(token, -1)
                 elif isIdentifier(token) or isConst(token):
                     posInST = self._st.addSymbolToST(token)
-                    if isIdentifier(token):
+
+                    if len(strConst) != 0 and token in strConst[0] or len(comments) != 0 and token in comments[0] :
+                        self._pif.addToPIF('CONSTANT', posInST)
+                    elif isIdentifier(token):
                         self._pif.addToPIF('ID', posInST)
                     else:
                         self._pif.addToPIF('CONSTANT', posInST)
