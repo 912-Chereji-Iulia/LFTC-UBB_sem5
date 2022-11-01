@@ -9,7 +9,7 @@ c <=> input("Input third nr: ")
 minimum& <=> a $wrong identifier$
 if b < minimum:
     minimum <=>/ b
-if c < minimum:
+if c <= minimum:
     minimum <=> c
 display(minimum)
 stop

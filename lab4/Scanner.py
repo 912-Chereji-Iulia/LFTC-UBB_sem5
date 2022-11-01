@@ -79,14 +79,18 @@ class Scanner:
                     self._pif.addToPIF("CONSTANT", posInST)
                     i = i + 1
                 elif i < len(data) - 3 and isComposedToken(token, data[i + 1], data[i + 2]):
-                    if data[i + 3] == "-" or isConst(data[i + 3]) or isIdentifier(data[i + 3]) or self.isReservedToken(
-                            data[i + 3]):
+                    if data[i + 3] == "-" or isConst(data[i + 3]) or isIdentifier(data[i + 3]) or data[
+                        i + 3] in self._words:
                         self._pif.addToPIF(token + data[i + 1] + data[i + 2], -1)
                     else:
                         message += 'Lexical error-> token ' + data[i + 3] + ' on line ' + str(lineNr) + "\n"
                     i = i + 2
                 elif self.isReservedToken(token):
-                    self._pif.addToPIF(token, -1)
+                    if token in [">", "<"] and data[i + 1] == "=":
+                        self._pif.addToPIF(token + data[i + 1], -1)
+                        i = i + 1
+                    else:
+                        self._pif.addToPIF(token, -1)
                 elif isIdentifier(token) or isConst(token):
                     posInST = self._st.addSymbolToST(token)
                     if len(strConst) != 0 and token in strConst[0] or len(comments) != 0 and token in comments[0]:
