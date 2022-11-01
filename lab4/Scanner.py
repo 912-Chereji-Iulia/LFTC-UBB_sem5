@@ -58,8 +58,8 @@ class Scanner:
         for line in lines:
             # get all words separated
             strConst = re.findall('"([^"]*)"', line)
-            comments= re.findall('\$([^"]*)\$', line)
-            # print(strConst)
+            comments = re.findall('\$([^"]*)\$', line)
+
             dataOnLine = re.split('([^a-zA-Z0-9])', line)
 
             # get rid of blank space and new line characters
@@ -73,8 +73,14 @@ class Scanner:
             i = 0
             while i < len(data):
                 token = data[i]
-                if i < len(data) - 3 and isComposedToken(token, data[i + 1], data[i + 2]):
-                    if data[i + 3] not in self._operators and data[i + 3] not in self._separators:
+                if token == "-" and re.search("^0$|^[+-]*[1-9][0-9]*$", data[i + 1]) and isIdentifier(
+                        data[i - 1]) == False and isConst(data[i - 1]) == False and i != 0:
+                    posInST = self._st.addSymbolToST(token + data[i + 1])
+                    self._pif.addToPIF("CONSTANT", posInST)
+                    i = i + 1
+                elif i < len(data) - 3 and isComposedToken(token, data[i + 1], data[i + 2]):
+                    if data[i + 3] == "-" or isConst(data[i + 3]) or isIdentifier(data[i + 3]) or self.isReservedToken(
+                            data[i + 3]):
                         self._pif.addToPIF(token + data[i + 1] + data[i + 2], -1)
                     else:
                         message += 'Lexical error-> token ' + data[i + 3] + ' on line ' + str(lineNr) + "\n"
@@ -83,14 +89,12 @@ class Scanner:
                     self._pif.addToPIF(token, -1)
                 elif isIdentifier(token) or isConst(token):
                     posInST = self._st.addSymbolToST(token)
-
-                    if len(strConst) != 0 and token in strConst[0] or len(comments) != 0 and token in comments[0] :
+                    if len(strConst) != 0 and token in strConst[0] or len(comments) != 0 and token in comments[0]:
                         self._pif.addToPIF('CONSTANT', posInST)
                     elif isIdentifier(token):
                         self._pif.addToPIF('ID', posInST)
                     else:
                         self._pif.addToPIF('CONSTANT', posInST)
-
                 else:
                     message += 'Lexical error-> token ' + token + ' on line ' + str(lineNr) + "\n"
                 i += 1
