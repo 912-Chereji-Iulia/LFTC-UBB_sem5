@@ -1,5 +1,6 @@
-
 from prettytable import PrettyTable
+
+
 class PIF:
     def __init__(self):
         self._pif = []
@@ -9,8 +10,9 @@ class PIF:
         self._pif.append(pair)
 
     def __str__(self):
-        result = 'PIF \n------------------- \n' + '|TOKEN   |  ST_POS |\n' + '------------------- \n'
+        result = PrettyTable(['TOKEN', 'ST_POS'])
+
         for pair in self._pif:
-            result = result + "|" + str(pair[0]) + "     |     " + str(pair[1]) + "  |" + '\n'
-        result += '-------------------'
-        return result
+            result.add_row([str(pair[0]), str(pair[1])])
+
+        return str(result)

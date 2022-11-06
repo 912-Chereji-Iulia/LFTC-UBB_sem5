@@ -1,4 +1,5 @@
 from HashTable import HashTable
+from prettytable import PrettyTable
 
 
 class SymbolTable:
@@ -18,8 +19,9 @@ class SymbolTable:
         return self._ht.getSymbolOnPos(pos)
 
     def __str__(self):
-        result = 'Symbol Table \n------------------- \n' + '|ST_POS   |  SYMBOL |\n' + '------------------- \n'
+        result = PrettyTable(['ST_POS', 'SYMBOL'])
+
         for pos in range(self.getSize()):
-            result = result + "|" + str(pos) + "     |     " + str(self.getSymbolOnPos(pos)) + "  |" + '\n'
-        result += '-------------------'
-        return result
+            result.add_row([str(pos), str(self.getSymbolOnPos(pos))])
+
+        return str(result)
