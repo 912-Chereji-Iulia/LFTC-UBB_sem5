@@ -6,7 +6,7 @@ The EBNF form of the way the file FA.in should be written is:
     digit="0"|"1"|....|"9"
     sign="+"|"-"
     stateName=letter{letter}
-    file = states "\n" alphabet "\n" initialState "\n" finalStates "\n" {transitions "\n"}
+    file = states "\n" alphabet "\n" initialState "\n" finalStates "\n" transitions "\n" {transitions "\n"}
     states = "states: \n" stateName {", " stateName}
     alphabet = "alphabet: \n" symbol {", " symbol}
     initialState = "initialState: \n" stateName
