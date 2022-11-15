@@ -92,7 +92,6 @@ class Scanner:
                     else:
                         self._pif.addToPIF(token, -1)
                 elif isIdentifier(token) or isConst(token):
-
                     posInST = self._st.addSymbolToST(token)
                     if len(strConst) != 0 and token in strConst[0] or len(comments) != 0 and token in comments[0]:
                         self._pif.addToPIF('CONSTANT', posInST)

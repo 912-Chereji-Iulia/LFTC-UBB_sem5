@@ -75,7 +75,7 @@ class FiniteAutomata:
     def toStringTransitions(self):
         result = "\n"
         for key in self._transitions.keys():
-            result += key[0] + " --->" + key[1] + " --->" + self._transitions[key][0] + "\n"
+            result += "δ("+key[0] + ", " + key[1] + ") = " + self._transitions[key][0] + "\n"
         return result
 
     def start(self):
