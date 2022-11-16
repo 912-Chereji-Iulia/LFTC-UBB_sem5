@@ -1,4 +1,4 @@
-https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab6
+https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab7
 
 The EBNF form of the way the file FA.in should be written is:
     symbol=letter | digit | sign
