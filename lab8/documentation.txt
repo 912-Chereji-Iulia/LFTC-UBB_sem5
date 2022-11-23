@@ -1,0 +1,38 @@
+https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab7
+
+The EBNF form of the way the file FA.in should be written is:
+    symbol=letter | digit | sign
+    letter="a"|"b"|....|"z"|"A"|"B"|....."Z"
+    digit="0"|"1"|....|"9"
+    sign="+"|"-"
+    stateName=letter{letter}
+    file = states "\n" alphabet "\n" initialState "\n" finalStates "\n" transitions "\n" {transitions "\n"}
+    states = "states: \n" stateName {", " stateName}
+    alphabet = "alphabet: \n" symbol {", " symbol}
+    initialState = "initialState: \n" stateName
+    finalStates= "finalStates: \n" stateName {", " stateName}
+    transitions= "transitions: \n" stateName ", " symbol ", " stateName
+
+For FA, I used a class containing a list for states, a list for alphabet, a value for the initialState, a list for the finalStates and a
+dictionary for the transitions, where the key is (state, symbol) and the value is a state.
+
+readFromFile(self, fileName): parses the given file in the method declaration and populates the lists
+    ->input: the name of the file from where we read the info
+
+toStringTransitions(self) : returns a to string version of displaying the list of transitions:
+    ->output: a string representing the transitions between states
+
+isDeterministicFA(self) checks if the given FA is deterministic or not i.e for each pair of states there is a unique next state,
+as specificed by the transitions
+    ->output: true if it s deterministic or false otherwise
+
+checkIsAccepted(self, string) checks if the string given as parameter is accepted by the FA or not
+    ->input: the string to be checked
+    ->output: true if it s accepted or false otherwise
+This function starts by checking if the FA is deterministic or not. If it s not, we return false, otherwise we start from the initial state
+and go character by character in the string, checking if the char matches the value of a transition from the current state to a new state.
+If it does, we go to that new state, otherwise we return false and stop. We go until the end and see if the last state belongs to
+the list of final states.
+
+validFA(self) checks if the given initial state and final states belong to the list of states
+    ->output: false if either one of them doesn't belong to the list, or true if all of them are in the states list
