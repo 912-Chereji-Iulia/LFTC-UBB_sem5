@@ -8,7 +8,7 @@ if __name__ == '__main__':
     # fa = FiniteAutomata('input/constant-integer.in')
     # fa.start()
 
-    grammar= Grammar("input/g1.txt")
+    grammar= Grammar("input/g2.txt")
     grammar.start()
 
 
