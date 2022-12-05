@@ -7,7 +7,6 @@ class Grammar:
         self._p = []
         self.readFromFile(fileName)
 
-
     def getNonTerminals(self):
         return self._nonTerminals
 
@@ -36,6 +35,10 @@ class Grammar:
             self._S = file.readline()[4:-1]
 
             file.readline()
+            newProductions = {}
+            for nt in self._nonTerminals:
+                newProductions[nt] = []
+
             while True:
                 line = file.readline()
                 if len(line) == 1:
@@ -43,16 +46,13 @@ class Grammar:
                 line = line.strip().split('->')
                 nonTerminal = line[0].strip()
                 productions = line[1].strip().split("|")
-                newProductions = []
-
-
+        
                 for p in productions:
                     self._p.append([nonTerminal, p])
                     p = p.strip().split(" ")
-                    newProductions.append(p)
+                    newProductions[nonTerminal].append(p)
 
-                self._productions[nonTerminal] = newProductions
-
+                self._productions[nonTerminal] = newProductions[nonTerminal]
 
     def checkCGF(self):
         cfg = True
@@ -60,7 +60,6 @@ class Grammar:
             if ' ' in p:
                 cfg = False
         return cfg
-
 
     def menu(self):
         print('1. Get nonterminals')
@@ -98,4 +97,3 @@ class Grammar:
                     print("\nIs not CFG\n")
             else:
                 break
-
