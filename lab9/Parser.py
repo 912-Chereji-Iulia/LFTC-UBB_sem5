@@ -16,14 +16,32 @@ class Parser:
                 dotPos = item[1][0].index('.')
                 afterDot = item[1][0][dotPos + 1:].strip()
                 if len(afterDot) > 0:
-                    firstAfterDot = afterDot[0]
+                    # firstAfterDot=""
+                    # found=False
+                    # i=0
+                    # while found==False:
+                    #     firstAfterDot+=afterDot[i]
+                    #     i+=1
+                    #     if firstAfterDot in self._grammar.getNonTerminals() or firstAfterDot in self._grammar.getTerminals():
+                    #         found=True
+
+                    if(afterDot in self._grammar.getTerminals() or afterDot in self._grammar.getNonTerminals()):
+                        firstAfterDot = afterDot
+                    else:
+                        firstAfterDot=afterDot[0]
+
                     if not self._grammar.isTerminal(firstAfterDot):
                         for prod in self._grammar.getProductionsForNonTerminal(firstAfterDot):
-                            for p in prod:
-                                production = (firstAfterDot, ['.' + p])
-                                if production not in closure:
-                                    closure.append(production)
-                                    ok = True
+                            newProd = ""
+                            for p in prod.split(" "):
+                                if (p != " "):
+                                    newProd += p
+
+                            production = (firstAfterDot, ['.' + newProd])
+                            if production not in closure:
+                                closure.append(production)
+                                ok = True
+
         return closure
 
     def goTo(self, state, symbol):
@@ -34,14 +52,21 @@ class Parser:
             element = production[1][0]
             dotPos = element.index('.')
             beforeDot = element[:dotPos]
-            afterDot = element[dotPos + 1:].strip()
+            afterDot = element[dotPos + 1:].strip().split(" ")
 
             if len(afterDot) != 0:
-                firstSymbolAfterDot=afterDot[0]
-                rest = afterDot[1:]
+                if len(afterDot[0]) > 0:
+                    firstSymbolAfterDot = afterDot[0][0]
+                else:
+                    firstSymbolAfterDot = ""
+
+                rest = afterDot[0][1:]
 
                 if firstSymbolAfterDot == symbol:
-                    newProd = (production[0], [beforeDot + firstSymbolAfterDot + '.' + rest])
+                    if len(rest) != 0:
+                        newProd = (production[0], [beforeDot + firstSymbolAfterDot + '.' + rest[0]])
+                    else:
+                        newProd = (production[0], [beforeDot + firstSymbolAfterDot + '.'])
                     items += [newProd]
 
         return self.closure(items)

@@ -36,7 +36,8 @@ class Grammar:
 
             file.readline()
             newProductions = {}
-            for nt in self._nonTerminals:
+
+            for nt in self._nonTerminals.strip().split(" "):
                 newProductions[nt] = []
 
             while True:
@@ -46,10 +47,12 @@ class Grammar:
                 line = line.strip().split('->')
                 nonTerminal = line[0].strip()
                 productions = line[1].strip().split("|")
-        
+
                 for p in productions:
+                    p = p.strip()
+
                     self._p.append([nonTerminal, p])
-                    p = p.strip().split(" ")
+                    # p = p.strip().split(" ")
                     newProductions[nonTerminal].append(p)
 
                 self._productions[nonTerminal] = newProductions[nonTerminal]
@@ -79,7 +82,7 @@ class Grammar:
                 print("Not a valid input type.")
                 break
             if inp == 1:
-                print("The nonterminals are: ", self._nonTerminals)
+                print("The nonterminals are:", self._nonTerminals)
             elif inp == 2:
                 print("The terminals are: ", self._terminals)
             elif inp == 3:
