@@ -12,8 +12,8 @@ if __name__ == '__main__':
 
 
     parser = Parser("input/g1.txt")
-    # grammar=Grammar("input/g1.txt")
-    #grammar.start()
+    grammar=Grammar("input/g1.txt")
+    grammar.start()
 
     parser.toStringCanonicalCollection()
 

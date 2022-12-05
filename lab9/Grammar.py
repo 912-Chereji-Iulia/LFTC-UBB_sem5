@@ -57,7 +57,7 @@ class Grammar:
     def checkCGF(self):
         cfg = True
         for p in self._productions:
-            if len(self._productions[p]) > 1:
+            if ' ' in p:
                 cfg = False
         return cfg
 

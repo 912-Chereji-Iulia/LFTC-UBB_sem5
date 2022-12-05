@@ -28,7 +28,7 @@ class Parser:
 
     def goTo(self, state, symbol):
         # move the dot after symbol if symbol== first symbol after dot
-        # then, call closure for this new item
+        # then, return closure for this new item
         items = []
         for production in state:
             element = production[1][0]
@@ -37,7 +37,7 @@ class Parser:
             afterDot = element[dotPos + 1:].strip()
 
             if len(afterDot) != 0:
-                firstSymbolAfterDot = afterDot[0]
+                firstSymbolAfterDot=afterDot[0]
                 rest = afterDot[1:]
 
                 if firstSymbolAfterDot == symbol:
@@ -49,13 +49,13 @@ class Parser:
     def computeCanonicalCollection(self):
         initialProd = [('S\'', ['.' + self._grammar.getStartingSymbol()])]
         canonicalCollection = [self.closure(initialProd)]
+        union = self._grammar.getNonTerminals() + " " + self._grammar.getTerminals()
 
         ccIsModified = True
         while ccIsModified:
             ccIsModified = False
             for state in canonicalCollection:
-                union = self._grammar.getNonTerminals() + " " + self._grammar.getTerminals()
-                for x in union:
+                for x in union.split(" "):
                     nextState = self.goTo(state, x)
                     if nextState is not None and nextState not in canonicalCollection:
                         canonicalCollection += [nextState]

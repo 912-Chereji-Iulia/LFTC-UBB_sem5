@@ -3,7 +3,6 @@ E = { int char string for if vector variable go stop display input else + - * / 
 S = program
 P = {
     program -> go cmpd_stmt stop
-    program -> epsilon
     relation -> < | <= | <=> | <> | >= | > | =:= | ==>
     stmt -> variable_declaration | vector_declaration | ifstmt | forstmt | iostmt | assignstmt
     cmpd_stmt -> stmt /n [cmpd_stmt]
