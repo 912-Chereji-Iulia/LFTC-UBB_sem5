@@ -4,7 +4,7 @@ class Grammar:
         self._terminals = []
         self._productions = {}
         self._S = ""
-        self._p = []
+        self._prodList = []
         self.readFromFile(fileName)
 
     def getNonTerminals(self):
@@ -52,7 +52,13 @@ class Grammar:
 
                 for p in productions:
                     p = p.strip()
-                    self._p.append([nonTerminal, p])
+                    p1=p.strip().split(" ")
+                    finalP=''
+                    for e in p1:
+                        if(e!=' '):
+                            finalP+=e
+                    self._prodList.append([nonTerminal, finalP])
+                    # p = p.strip().split(" ")
                     newProductions[nonTerminal].append(p)
 
                 self._productions[nonTerminal] = newProductions[nonTerminal]
