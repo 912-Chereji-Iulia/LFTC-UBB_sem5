@@ -47,6 +47,8 @@ class Grammar:
                 line = line.strip().split('->')
                 nonTerminal = line[0].strip()
                 productions = line[1].strip().split("|")
+                if ' ' in nonTerminal:
+                    newProductions[nonTerminal]=[]
 
                 for p in productions:
                     p = p.strip()
@@ -59,7 +61,9 @@ class Grammar:
 
     def checkCGF(self):
         cfg = True
-        for p in self._productions:
+        if self._S not in self._nonTerminals:
+            return not cfg
+        for p in self._productions.keys():
             if ' ' in p:
                 cfg = False
         return cfg

@@ -1,6 +1,5 @@
 from Grammar import Grammar
 
-
 class Parser:
     def __init__(self, filename):
         self._grammar = Grammar(filename)
@@ -27,18 +26,17 @@ class Parser:
                 #             if firstAfterDot in self._grammar.getNonTerminals().split(" ") or firstAfterDot in self._grammar.getTerminals().split(" "):
                 #                 found=True
                 if len(afterDot)>0:
+
                     if(afterDot in self._grammar.getTerminals() or afterDot in self._grammar.getNonTerminals()):
                         firstAfterDot = afterDot
                     else:
                         firstAfterDot=afterDot[0]
-
                     if not self._grammar.isTerminal(firstAfterDot):
                         for prod in self._grammar.getProductionsForNonTerminal(firstAfterDot):
                             newProd = ""
                             for p in prod.split(" "):
                                 if (p != " "):
                                     newProd += p
-
                             production = (firstAfterDot, ['.' + newProd])
                             if production not in closure:
                                 closure.append(production)
