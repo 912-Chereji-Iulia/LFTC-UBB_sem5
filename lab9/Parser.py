@@ -15,16 +15,18 @@ class Parser:
             for item in closure:
                 dotPos = item[1][0].index('.')
                 afterDot = item[1][0][dotPos + 1:].strip()
-                if len(afterDot) > 0:
-                    # firstAfterDot=""
-                    # found=False
-                    # i=0
-                    # while found==False:
-                    #     firstAfterDot+=afterDot[i]
-                    #     i+=1
-                    #     if firstAfterDot in self._grammar.getNonTerminals() or firstAfterDot in self._grammar.getTerminals():
-                    #         found=True
-
+                # if len(afterDot) > 0:
+                #     firstAfterDot=""
+                #     found=False
+                #     i=0
+                #     while found==False and i<len(afterDot):
+                #         firstAfterDot+=afterDot[i]
+                #         i+=1
+                #         if len(firstAfterDot)>1:
+                #
+                #             if firstAfterDot in self._grammar.getNonTerminals().split(" ") or firstAfterDot in self._grammar.getTerminals().split(" "):
+                #                 found=True
+                if len(afterDot)>0:
                     if(afterDot in self._grammar.getTerminals() or afterDot in self._grammar.getNonTerminals()):
                         firstAfterDot = afterDot
                     else:
@@ -86,6 +88,7 @@ class Parser:
                         canonicalCollection += [nextState]
                         ccIsModified = True
         return canonicalCollection
+
 
     def toStringCanonicalCollection(self):
         print("Canonical collection: ")

@@ -83,7 +83,7 @@
       <workItem from="1670067502827" duration="2046000" />
       <workItem from="1670169197376" duration="37000" />
       <workItem from="1670172468755" duration="344000" />
-      <workItem from="1670248780547" duration="8781000" />
+      <workItem from="1670248780547" duration="11946000" />
     </task>
     <servers />
   </component>
@@ -95,18 +95,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Parser.py</url>
-          <line>49</line>
+          <line>51</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Parser.py</url>
-          <line>74</line>
+          <line>76</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Parser.py</url>
+          <line>8</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/lab9$main.coverage" NAME="main Coverage Results" MODIFIED="1670283335984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lab9$main.coverage" NAME="main Coverage Results" MODIFIED="1670328208318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
