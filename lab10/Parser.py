@@ -110,16 +110,14 @@ class Parser:
             accept = 0
             nrOfProductionsForState = len(state)
             elemInTable = table[stateNr]
+
             for prod in state:
                 element = prod[1][0]
                 dotPos = element.index('.')
                 beforeDot = element[:dotPos]
                 afterDot = element[dotPos + 1:].strip()
 
-                # dot is not at the end
-                if len(afterDot) != 0:
-                    shift += 1
-                else:
+                if len(afterDot) == 0:
                     # dot is at the end for prod. of S’
                     if prod[0] == 'S\'' and beforeDot == self._grammar.getStartingSymbol():
                         accept += 1
@@ -127,8 +125,11 @@ class Parser:
                     # dot is at the end, but not for S’
                     elif prod[0] != 'S\'':
                         reduce += 1
-                        elem=[prod[0], beforeDot]
+                        elem = [prod[0], beforeDot]
                         productionPos = self._grammar._prodList.index(elem)
+                else:
+                    # dot is not at the end
+                    shift += 1
 
             # one column for action/state (for a state, action is unique because prediction is ignored)
             if shift == nrOfProductionsForState:
