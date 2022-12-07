@@ -1,11 +1,12 @@
 from Grammar import Grammar
 
+
 class Parser:
     def __init__(self, filename):
         self._grammar = Grammar(filename)
 
     def closure(self, items):
-        if not items:
+        if len(items) == 0:
             return None
         closure = items
         ok = True
@@ -14,23 +15,8 @@ class Parser:
             for item in closure:
                 dotPos = item[1][0].index('.')
                 afterDot = item[1][0][dotPos + 1:].strip()
-                # if len(afterDot) > 0:
-                #     firstAfterDot=""
-                #     found=False
-                #     i=0
-                #     while found==False and i<len(afterDot):
-                #         firstAfterDot+=afterDot[i]
-                #         i+=1
-                #         if len(firstAfterDot)>1:
-                #
-                #             if firstAfterDot in self._grammar.getNonTerminals().split(" ") or firstAfterDot in self._grammar.getTerminals().split(" "):
-                #                 found=True
-                if len(afterDot)>0:
-
-                    if(afterDot in self._grammar.getTerminals() or afterDot in self._grammar.getNonTerminals()):
-                        firstAfterDot = afterDot
-                    else:
-                        firstAfterDot=afterDot[0]
+                if len(afterDot) > 0:
+                    firstAfterDot = afterDot[0]
                     if not self._grammar.isTerminal(firstAfterDot):
                         for prod in self._grammar.getProductionsForNonTerminal(firstAfterDot):
                             newProd = ""
@@ -41,7 +27,6 @@ class Parser:
                             if production not in closure:
                                 closure.append(production)
                                 ok = True
-
         return closure
 
     def goTo(self, state, symbol):
@@ -86,7 +71,6 @@ class Parser:
                         canonicalCollection += [nextState]
                         ccIsModified = True
         return canonicalCollection
-
 
     def toStringCanonicalCollection(self):
         print("Canonical collection: ")

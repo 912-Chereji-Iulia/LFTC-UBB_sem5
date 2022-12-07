@@ -10,8 +10,9 @@ if __name__ == '__main__':
     # fa = FiniteAutomata('input/constant-integer.in')
     # fa.start()
 
-    #parser = Parser("input/g1.txt")
-    grammar=Grammar("input/g1.txt")
-    grammar.start()
 
-    #parser.toStringCanonicalCollection()
+    # grammar=Grammar("input/g2.txt")
+    # grammar.start()
+
+    parser = Parser("input/g1.txt")
+    parser.toStringCanonicalCollection()
