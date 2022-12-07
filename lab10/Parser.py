@@ -109,32 +109,36 @@ class Parser:
             reduce = 0
             accept = 0
             nrOfProductionsForState = len(state)
+            elemInTable = table[stateNr]
             for prod in state:
                 element = prod[1][0]
                 dotPos = element.index('.')
                 beforeDot = element[:dotPos]
                 afterDot = element[dotPos + 1:].strip()
+
                 # dot is not at the end
                 if len(afterDot) != 0:
                     shift += 1
                 else:
-                    # dot is at the end, but not for S’
-                    if prod[0] != 'S\'':
-                        reduce += 1
-                        productionPos = self._grammar._prodList.index([prod[0], beforeDot])
-                    # dot is at the end, prod. of S’
-                    elif beforeDot == self._grammar.getStartingSymbol():
+                    # dot is at the end for prod. of S’
+                    if prod[0] == 'S\'' and beforeDot == self._grammar.getStartingSymbol():
                         accept += 1
+
+                    # dot is at the end, but not for S’
+                    elif prod[0] != 'S\'':
+                        reduce += 1
+                        elem=[prod[0], beforeDot]
+                        productionPos = self._grammar._prodList.index(elem)
 
             # one column for action/state (for a state, action is unique because prediction is ignored)
             if shift == nrOfProductionsForState:
-                table[stateNr]['action'] = 'shift'
+                elemInTable['ACTION'] = 'shift'
 
             elif reduce == nrOfProductionsForState:
-                table[stateNr]['action'] = 'reduce' + str(productionPos + 1)
+                elemInTable['ACTION'] = 'reduce' + str(productionPos + 1)
 
             elif accept == nrOfProductionsForState:
-                table[stateNr]['action'] = 'accept'
+                elemInTable['ACTION'] = 'accept'
             else:
                 raise (Exception('error for state ' + str(state)))
 
@@ -144,7 +148,7 @@ class Parser:
                 nextState = self.goTo(state, symbol)
                 if nextState in states:
                     indexOfNextState = states.index(nextState)
-                    table[stateNr][symbol] = indexOfNextState
+                    elemInTable[symbol] = indexOfNextState
             stateNr += 1
 
         return table
@@ -152,13 +156,12 @@ class Parser:
     def toStringTable(self):
         table = self.getTable()
         result = PrettyTable(['STATE', 'ACTION', 'GOTO'])
-
         stateNr = 0
         for pair in table:
             for k in pair.keys():
                 for v in pair.values():
                     if (pair.get(k) == v):
-                        if k == 'action':
+                        if k == 'ACTION':
                             result.add_row([stateNr, str(v), " "])
                         else:
                             result.add_row([stateNr, "", str(k) + ": s" + str(v)])
