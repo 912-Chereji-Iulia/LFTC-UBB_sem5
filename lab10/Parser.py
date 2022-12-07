@@ -99,38 +99,43 @@ class Parser:
 
     def getTable(self):
         states = self.computeCanonicalCollection()
-        table = [{} for ind in range(len(states))]
-
-        for state in states:
-            print(state)
+        table = []
+        for i in range(len(states)):
+            table.append({})
 
         stateNr = 0
         for state in states:
             shift = 0
             reduce = 0
             accept = 0
+            nrOfProductionsForState = len(state)
             for prod in state:
                 element = prod[1][0]
                 dotPos = element.index('.')
                 beforeDot = element[:dotPos]
                 afterDot = element[dotPos + 1:].strip()
+                # dot is not at the end
                 if len(afterDot) != 0:
                     shift += 1
                 else:
+                    # dot is at the end, but not for S’
                     if prod[0] != 'S\'':
                         reduce += 1
-                        productionIndex = self._grammar._prodList.index([prod[0], beforeDot])
+                        productionPos = self._grammar._prodList.index([prod[0], beforeDot])
+                    # dot is at the end, prod. of S’
                     elif beforeDot == self._grammar.getStartingSymbol():
                         accept += 1
 
-            if shift == len(state):
+            if shift == nrOfProductionsForState:
                 table[stateNr]['action'] = 'shift'
 
-            elif reduce == len(state):
-                table[stateNr]['action'] = 'reduce' + str(productionIndex + 1)
+            elif reduce == nrOfProductionsForState:
+                table[stateNr]['action'] = 'reduce' + str(productionPos + 1)
 
-            elif accept == len(state):
+            elif accept == nrOfProductionsForState:
                 table[stateNr]['action'] = 'accept'
+            else:
+                raise (Exception('error for state '+ str(state)))
 
             union = self._grammar.getNonTerminals() + self._grammar.getTerminals()
             for symbol in union:
@@ -152,7 +157,7 @@ class Parser:
                         if p == 'action':
                             result.add_row([stateNr, str(k), " "])
                         else:
-                            result.add_row([stateNr, "", str(p)+"->"+ str(k)])
+                            result.add_row([stateNr, "", str(p) + "->" + str(k)])
             stateNr += 1
 
         return str(result)
