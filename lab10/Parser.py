@@ -126,6 +126,7 @@ class Parser:
                     elif beforeDot == self._grammar.getStartingSymbol():
                         accept += 1
 
+            # one column for action/state (for a state, action is unique because prediction is ignored)
             if shift == nrOfProductionsForState:
                 table[stateNr]['action'] = 'shift'
 
@@ -135,29 +136,32 @@ class Parser:
             elif accept == nrOfProductionsForState:
                 table[stateNr]['action'] = 'accept'
             else:
-                raise (Exception('error for state '+ str(state)))
+                raise (Exception('error for state ' + str(state)))
 
+            # goto: one column for each symbol in N+T
             union = self._grammar.getNonTerminals() + self._grammar.getTerminals()
             for symbol in union:
                 nextState = self.goTo(state, symbol)
                 if nextState in states:
-                    table[stateNr][symbol] = states.index(nextState)
-            stateNr = stateNr + 1
+                    indexOfNextState = states.index(nextState)
+                    table[stateNr][symbol] = indexOfNextState
+            stateNr += 1
 
         return table
 
     def toStringTable(self):
         table = self.getTable()
         result = PrettyTable(['STATE', 'ACTION', 'GOTO'])
+
         stateNr = 0
         for pair in table:
-            for p in pair.keys():
-                for k in pair.values():
-                    if (pair.get(p) == k):
-                        if p == 'action':
-                            result.add_row([stateNr, str(k), " "])
+            for k in pair.keys():
+                for v in pair.values():
+                    if (pair.get(k) == v):
+                        if k == 'action':
+                            result.add_row([stateNr, str(v), " "])
                         else:
-                            result.add_row([stateNr, "", str(p) + "->" + str(k)])
+                            result.add_row([stateNr, "", str(k) + ": s" + str(v)])
             stateNr += 1
 
         return str(result)
