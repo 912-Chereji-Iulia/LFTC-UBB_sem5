@@ -1,6 +1,7 @@
 from FiniteAutomata import FiniteAutomata
 from Grammar import Grammar
 from Parser import Parser
+from ParserOutput import ParserOutput
 
 from Scanner import Scanner
 
@@ -10,8 +11,10 @@ if __name__ == '__main__':
     # fa = FiniteAutomata('input/constant-integer.in')
     # fa.start()
 
-    parser = Parser("input/g1.txt")
+    # parser = Parser("input/g1.txt")
     # grammar=Grammar("input/g1.txt")
     # grammar.start()
 
-    print(parser.toStringTable())
+    seq = input("Input sequence for parser: ")
+    parserOutput = ParserOutput("input/g1.txt")
+    parserOutput.parse(seq)
