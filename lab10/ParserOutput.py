@@ -51,47 +51,55 @@ class ParserOutput:
         result = self.displayParsingByDerivations(self.output)
         self.writeToFile("output/parserOutput.out", result)
 
+    def shift(self, symbol, table, state):
+        self.workStack.append(symbol)
+        self.workStack.append(str(table[state][symbol]))
+
+    def accept(self):
+        if (len(self.inputStack)) != 0:
+            raise Exception("something went wrong")
+        self.workStack = []
+
+    def reduce(self, table, state):
+        try:
+            rIndex = int(table[state]["ACTION"][-1])
+        except:
+            print("Can't be parsed")
+        production = self.parser._grammar._prodList[rIndex]
+        self.workStack.pop()
+        removeFromWorkStack = []
+
+        for symbol in production[1]:
+            removeFromWorkStack.append(symbol)
+
+        while len(removeFromWorkStack) > 0 and len(self.workStack) > 0:
+
+            if self.workStack[-1].isnumeric():
+                self.workStack.pop()
+
+            if self.workStack[-1] == removeFromWorkStack[-1]:
+                removeFromWorkStack.pop()
+
+            self.workStack.pop()
+
+        if len(removeFromWorkStack) != 0:
+            raise (Exception('error at parsing reduce'))
+
+        self.inputStack.insert(0, production[0])
+        self.output.insert(0, str(rIndex))
+
     def checkActionForSymbol(self, symbol, table, state):
         global rIndex
         if symbol is not None:
             if symbol not in table[state]:
                 raise Exception("Symbol " + symbol + " not in table for state " + str(state))
             elif table[state][symbol] is not None and table[state]["ACTION"] == "shift":
-                self.workStack.append(symbol)
-                self.workStack.append(str(table[state][symbol]))
-
+                self.shift(symbol,table,state)
         if symbol is None:
             if table[state]["ACTION"] == "accept":
-                if (len(self.inputStack)) != 0:
-                    raise Exception("something went wrong")
-                self.workStack = []
+               self.accept()
             else:
-                try:
-                    rIndex = int(table[state]["ACTION"][-1])
-                except:
-                    print("Can't be parsed")
-                production = self.parser._grammar._prodList[rIndex]
-                self.workStack.pop()
-                removeFromWorkStack = []
-
-                for symbol in production[1]:
-                    removeFromWorkStack.append(symbol)
-
-                while len(removeFromWorkStack) > 0 and len(self.workStack) > 0:
-
-                    if self.workStack[-1].isnumeric():
-                        self.workStack.pop()
-
-                    if self.workStack[-1] == removeFromWorkStack[-1]:
-                        removeFromWorkStack.pop()
-
-                    self.workStack.pop()
-
-                if len(removeFromWorkStack) != 0:
-                    raise (Exception('error at parsing reduce'))
-
-                self.inputStack.insert(0, production[0])
-                self.output.insert(0, str(rIndex))
+                self.reduce(table, state)
 
     def writeToFile(self, fileName, result):
         with open(fileName, 'w') as file:
