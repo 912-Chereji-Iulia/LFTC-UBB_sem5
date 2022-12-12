@@ -4,6 +4,7 @@ from Parser import Parser
 from ParserOutput import ParserOutput
 
 from Scanner import Scanner
+from Tree import Tree
 
 if __name__ == '__main__':
     # scanner = Scanner()
@@ -18,3 +19,4 @@ if __name__ == '__main__':
     seq = input("Input sequence for parser: ")
     parserOutput = ParserOutput("input/g1.txt")
     parserOutput.parse(seq)
+    #tree=Tree("input/g1.txt")
