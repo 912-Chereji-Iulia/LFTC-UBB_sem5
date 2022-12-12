@@ -7,7 +7,7 @@ class ParserOutput:
         self.parser = Parser(filename)
         self.table = Table(filename)
 
-    def displayParsing(self, output):
+    def displayParsingByDerivations(self, output):
         firstProduction = self.parser._grammar._prodList[int(output[0])]
         result = str(firstProduction[0]) + "=>(" + output[0] + ") " + str(firstProduction[1])
         initial = firstProduction[1]
@@ -41,16 +41,22 @@ class ParserOutput:
                 symbol = self.inputStack.pop(0)
             else:
                 symbol = None
-            self.checkActionForSymbol(symbol, table, state)
+            try:
+                self.checkActionForSymbol(symbol, table, state)
+            except Exception as e:
+                print(e)
+                return
 
-        result = self.displayParsing(self.output)
+
+        result = self.displayParsingByDerivations(self.output)
         self.writeToFile("output/parserOutput.out", result)
 
     def checkActionForSymbol(self, symbol, table, state):
+        global rIndex
         if symbol is not None:
             if symbol not in table[state]:
                 raise Exception("Symbol " + symbol + " not in table for state " + str(state))
-            elif table[state][symbol] and table[state]["ACTION"] == "shift":
+            elif table[state][symbol] is not None and table[state]["ACTION"] == "shift":
                 self.workStack.append(symbol)
                 self.workStack.append(str(table[state][symbol]))
 
@@ -63,7 +69,7 @@ class ParserOutput:
                 try:
                     rIndex = int(table[state]["ACTION"][-1])
                 except:
-                    print("Not a valid index")
+                    print("Can't be parsed")
                 production = self.parser._grammar._prodList[rIndex]
                 self.workStack.pop()
                 removeFromWorkStack = []
