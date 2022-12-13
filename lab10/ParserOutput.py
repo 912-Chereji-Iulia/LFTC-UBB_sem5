@@ -56,7 +56,7 @@ class ParserOutput:
 
     def accept(self):
         if (len(self.inputStack)) != 0:
-            raise Exception("something went wrong")
+            raise Exception("Can't be parsed")
         self.workStack = []
 
     def reduce(self, table, state):
