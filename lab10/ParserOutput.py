@@ -42,7 +42,7 @@ class ParserOutput:
             else:
                 symbol = None
             try:
-                self.checkActionForSymbol(symbol, table, state)
+                self.checkActionForState(symbol, table, state)
             except Exception as e:
                 print(e)
                 return
@@ -77,8 +77,10 @@ class ParserOutput:
         while len(removeFromWorkStack) > 0 and len(self.workStack) > 0:
             if self.workStack[-1].isnumeric():
                 self.workStack.pop()
+
             if self.workStack[-1] == removeFromWorkStack[-1]:
                 removeFromWorkStack.pop()
+
             self.workStack.pop()
 
         if len(removeFromWorkStack) != 0:
@@ -87,7 +89,7 @@ class ParserOutput:
         self.inputStack.insert(0, leftOperand)
         self.outputBand.insert(0, str(rIndex))
 
-    def checkActionForSymbol(self, symbol, table, state):
+    def checkActionForState(self, symbol, table, state):
         global rIndex
         if symbol is not None:
             if symbol not in table[state]:

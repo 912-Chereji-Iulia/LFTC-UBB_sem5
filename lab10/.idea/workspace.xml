@@ -38,7 +38,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for Tests.MyTestCase.testParser">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="lab10" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -78,8 +78,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for Tests.MyTestCase.testParser" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.Python tests for Tests.MyTestCase.testParser" />
       </list>
     </recent_temporary>
   </component>
@@ -95,7 +95,7 @@
       <workItem from="1670610361568" duration="1363000" />
       <workItem from="1670611757972" duration="3573000" />
       <workItem from="1670699428526" duration="10486000" />
-      <workItem from="1670789142352" duration="9908000" />
+      <workItem from="1670789142352" duration="10242000" />
     </task>
     <servers />
   </component>
