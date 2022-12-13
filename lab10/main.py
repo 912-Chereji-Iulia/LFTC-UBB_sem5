@@ -19,4 +19,5 @@ if __name__ == '__main__':
     seq = input("Input sequence for parser: ")
     parserOutput = ParserOutput("input/g1.txt")
     parserOutput.parse(seq)
-    #tree=Tree("input/g1.txt")
+
+

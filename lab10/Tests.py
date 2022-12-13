@@ -1,6 +1,7 @@
 import unittest
 
 from Parser import Parser
+from ParserOutput import ParserOutput
 
 
 class MyTestCase(unittest.TestCase):
@@ -21,6 +22,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(parser.goTo([("S'", ['.S']), ('S', ['.aA'])],"S"),  [("S'", ['S.'])])
         self.assertNotEqual(parser.goTo([("S'", ['.S']), ('S', ['.aA'])], "A"),  [("S'", ['S.'])])
         self.assertEqual(parser.goTo([("S'", ['.S']), ('S', ['.aA'])], "A"), None)
+
 
 if __name__ == '__main__':
     unittest.main()

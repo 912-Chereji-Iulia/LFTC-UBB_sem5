@@ -1,11 +1,11 @@
 from Parser import Parser
 from Table import Table
 
-
 class ParserOutput:
     def __init__(self, filename):
         self.parser = Parser(filename)
         self.table = Table(filename)
+
 
     def displayParsingByDerivations(self, output):
         firstProduction = self.parser._grammar._prodList[int(output[0])]
@@ -27,7 +27,7 @@ class ParserOutput:
         self.inputStack = []
         for symbol in input:
             self.inputStack.append(symbol)
-        self.output = []
+        self.outputBand = []
 
     def parse(self, input):
         table = self.table.getTable()
@@ -47,8 +47,7 @@ class ParserOutput:
                 print(e)
                 return
 
-
-        result = self.displayParsingByDerivations(self.output)
+        result = self.displayParsingByDerivations(self.outputBand)
         self.writeToFile("output/parserOutput.out", result)
 
     def shift(self, symbol, table, state):
@@ -65,28 +64,28 @@ class ParserOutput:
             rIndex = int(table[state]["ACTION"][-1])
         except:
             print("Can't be parsed")
-        production = self.parser._grammar._prodList[rIndex]
-        self.workStack.pop()
-        removeFromWorkStack = []
 
-        for symbol in production[1]:
+        production = self.parser._grammar._prodList[rIndex]
+        leftOperand=production[0]
+        rightOperand = production[1]
+        self.workStack.pop()
+
+        removeFromWorkStack = []
+        for symbol in rightOperand:
             removeFromWorkStack.append(symbol)
 
         while len(removeFromWorkStack) > 0 and len(self.workStack) > 0:
-
             if self.workStack[-1].isnumeric():
                 self.workStack.pop()
-
             if self.workStack[-1] == removeFromWorkStack[-1]:
                 removeFromWorkStack.pop()
-
             self.workStack.pop()
 
         if len(removeFromWorkStack) != 0:
             raise (Exception('error at parsing reduce'))
 
-        self.inputStack.insert(0, production[0])
-        self.output.insert(0, str(rIndex))
+        self.inputStack.insert(0, leftOperand)
+        self.outputBand.insert(0, str(rIndex))
 
     def checkActionForSymbol(self, symbol, table, state):
         global rIndex
@@ -94,10 +93,10 @@ class ParserOutput:
             if symbol not in table[state]:
                 raise Exception("Symbol " + symbol + " not in table for state " + str(state))
             elif table[state][symbol] is not None and table[state]["ACTION"] == "shift":
-                self.shift(symbol,table,state)
+                self.shift(symbol, table, state)
         if symbol is None:
             if table[state]["ACTION"] == "accept":
-               self.accept()
+                self.accept()
             else:
                 self.reduce(table, state)
 
