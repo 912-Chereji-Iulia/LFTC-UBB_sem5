@@ -1,3 +1,5 @@
+import re
+
 from Parser import Parser
 from Table import Table
 
@@ -60,10 +62,14 @@ class ParserOutput:
         self.workStack = []
 
     def reduce(self, table, state):
-        try:
-            rIndex = int(table[state]["ACTION"][-1])
-        except:
+        global rIndex
+        possibleReduceIndex=table[state]["ACTION"][-1]
+        isInt = re.search("^0$|^[+-]*[1-9][0-9]*$", possibleReduceIndex)
+        if isInt:
+            rIndex = int(possibleReduceIndex)
+        else:
             print("Can't be parsed")
+            exit(1)
 
         production = self.parser._grammar._prodList[rIndex]
         leftOperand = production[0]
@@ -90,7 +96,6 @@ class ParserOutput:
         self.outputBand.insert(0, str(rIndex))
 
     def checkActionForState(self, symbol, table, state):
-        global rIndex
         if symbol is not None:
             if symbol not in table[state]:
                 raise Exception("Symbol " + symbol + " not in table for state " + str(state))
