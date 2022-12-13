@@ -1,11 +1,11 @@
 from Parser import Parser
 from Table import Table
 
+
 class ParserOutput:
     def __init__(self, filename):
         self.parser = Parser(filename)
         self.table = Table(filename)
-
 
     def displayParsingByDerivations(self, output):
         firstProduction = self.parser._grammar._prodList[int(output[0])]
@@ -66,7 +66,7 @@ class ParserOutput:
             print("Can't be parsed")
 
         production = self.parser._grammar._prodList[rIndex]
-        leftOperand=production[0]
+        leftOperand = production[0]
         rightOperand = production[1]
         self.workStack.pop()
 
@@ -75,12 +75,12 @@ class ParserOutput:
             removeFromWorkStack.append(symbol)
 
         while len(removeFromWorkStack) > 0 and len(self.workStack) > 0:
-            if self.workStack[-1].isnumeric():
+            lastFromWorkStack = self.workStack[-1]
+            if lastFromWorkStack.isnumeric():
                 self.workStack.pop()
-
-            if self.workStack[-1] == removeFromWorkStack[-1]:
+            lastFromWorkStack = self.workStack[-1]
+            if lastFromWorkStack == removeFromWorkStack[-1]:
                 removeFromWorkStack.pop()
-
             self.workStack.pop()
 
         if len(removeFromWorkStack) != 0:

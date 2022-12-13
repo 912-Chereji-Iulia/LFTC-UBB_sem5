@@ -4,7 +4,7 @@ from Parser import Parser
 from ParserOutput import ParserOutput
 
 from Scanner import Scanner
-from Tree import Tree
+
 
 if __name__ == '__main__':
     # scanner = Scanner()
