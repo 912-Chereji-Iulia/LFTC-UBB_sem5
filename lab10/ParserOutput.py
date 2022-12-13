@@ -8,6 +8,7 @@ class ParserOutput:
     def __init__(self, filename):
         self.parser = Parser(filename)
         self.table = Table(filename)
+        self.errMessage = ""
 
     def displayParsingByDerivations(self, output):
         firstProduction = self.parser._grammar._prodList[int(output[0])]
@@ -31,11 +32,11 @@ class ParserOutput:
             self.inputStack.append(symbol)
         self.outputBand = []
 
-    def parse(self, input):
+    def parse(self, seq):
         table = self.table.getTable()
         print(self.table.toStringTable(table))
 
-        self.initialiseStacks(input)
+        self.initialiseStacks(seq)
 
         while len(self.workStack) != 0:
             state = int(self.workStack[-1])
@@ -47,10 +48,10 @@ class ParserOutput:
                 self.checkActionForState(symbol, table, state)
             except Exception as e:
                 print(e)
-                return
 
         result = self.displayParsingByDerivations(self.outputBand)
-        self.writeToFile("output/parserOutput.out", result)
+        if self.errMessage == "":
+            self.writeToFile("output/parserOutput.out", result)
 
     def shift(self, symbol, table, state):
         self.workStack.append(symbol)
@@ -58,17 +59,20 @@ class ParserOutput:
 
     def accept(self):
         if (len(self.inputStack)) != 0:
+            self.errMessage += "\nCan't be parsed"
             raise Exception("Can't be parsed")
         self.workStack = []
 
     def reduce(self, table, state):
         global rIndex
-        possibleReduceIndex=table[state]["ACTION"][-1]
+        possibleReduceIndex = table[state]["ACTION"][-1]
         isInt = re.search("^0$|^[+-]*[1-9][0-9]*$", possibleReduceIndex)
         if isInt:
             rIndex = int(possibleReduceIndex)
         else:
             print("Can't be parsed")
+            self.errMessage += "\nCan't be parsed"
+            self.writeToFile("output/parserOutput.out", self.errMessage)
             exit(1)
 
         production = self.parser._grammar._prodList[rIndex]
@@ -90,6 +94,7 @@ class ParserOutput:
             self.workStack.pop()
 
         if len(removeFromWorkStack) != 0:
+            self.errMessage += "\nerror at parsing reduce"
             raise (Exception('error at parsing reduce'))
 
         self.inputStack.insert(0, leftOperand)
@@ -98,6 +103,7 @@ class ParserOutput:
     def checkActionForState(self, symbol, table, state):
         if symbol is not None:
             if symbol not in table[state]:
+                self.errMessage += "\nSymbol " + symbol + " not in table for state " + str(state)
                 raise Exception("Symbol " + symbol + " not in table for state " + str(state))
             elif table[state][symbol] is not None and table[state]["ACTION"] == "shift":
                 self.shift(symbol, table, state)
