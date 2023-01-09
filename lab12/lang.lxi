@@ -1,0 +1,42 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+int nrLines = 0;
+
+%}
+
+%option noyywrap
+%option caseless
+
+digit [0-9]
+nonZeroDigit [1-9]
+intNr [+-]?{nonZeroDigit}{digit}*|0
+letter [a-zA-Z_]
+stringConst \"({letter}|{digit})*\"
+id {letter}({letter}|{digit})*
+
+%%
+
+"go"|"stop"|"int"|"char"|"string"|"for"|"if"|"else"|"in"|"and"|"variable"|"input"|"range"|"display"|"vector" {printf("Reserved word: %s\n", yytext);}
+
+{id} {printf( "Identifier: %s\n", yytext); }
+
+{stringConst}|{intNr} {printf( "Constant: %s\n", yytext ); }
+
+":"|"("|")"|"["|"]"|"#"|"\""	{printf( "Separator: %s\n", yytext ); }
+
+"+"|"-"|"*"|"/"|"<"|"$"|">"|"<="|">="|"=:="|"==>"|"<=>"|"=="|"^" {printf( "Operator: %s\n", yytext );}
+
+[\n]+ {nrLines++;}
+
+[ ]+ {}
+
+. {printf("Error at token %s at line %d\n", yytext, nrLines+1);}
+
+%%
+int main(int argc, char** argv) {
+    yyin = stdin;
+    yylex();
+
+}

@@ -1,0 +1,58 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+int nrLines = 0;
+
+%}
+
+%option noyywrap
+%option caseless
+
+digit [0-9]
+nonZeroDigit [1-9]
+intNr [+-]?{nonZeroDigit}{digit}*|0
+letter [a-zA-Z_]
+stringConst \"({letter}|{digit})*\"
+id {letter}({letter}|{digit})*
+
+%%
+
+"go"|"stop"|"int"|"char"|"string"|"for"|"if"|"else"|"in"|"and"|"variable"|"input"|"range"|"display"|"vector" {printf("Reserved word: %s\n", yytext);}
+
+{id} {printf( "Identifier: %s\n", yytext); }
+
+{stringConst}|{intNr} {printf( "Constant: %s\n", yytext ); }
+
+":"|"("|")"|"["|"]"|"#"|"\""	{printf( "Separator: %s\n", yytext ); }
+
+"+"|"-"|"*"|"/"|"<"|"$"|">"|"<="|">="|"=:="|"==>"|"<=>"|"=="|"^" {printf( "Operator: %s\n", yytext );}
+
+[\n]+ {nrLines++;}
+
+[ ]+ {}
+
+. {printf("Error at token %s at line %d\n", yytext, nrLines+1);}
+
+%%
+int main(int argc, char** argv) {
+    yyin = stdin;
+    yylex();
+
+}
+
+DEMO: 
+
+The above code is in the lang.lxi file. For running it, I use the commands:
+    lex "/Users/iuliachereji/Desktop/UNI WORK/Year3-sem1/LFTC/LFTC-UBB_sem5/lab12/lang.lxi
+    gcc lex.yy.c -o mylex
+which will generate the executable mylex that will be used to run the program:
+    ./mylex<"/Users/iuliachereji/Desktop/UNI WORK/Year3-sem1/LFTC/LFTC-UBB_sem5/lab12/Lab1a - p1.txt"
+The output of the program will look something like this, parsing the whole input file given for the lex and deciding if it is valid or not:
+    Reserved word: go
+    Reserved word: variable
+    Identifier: a
+    Operator: ^
+    Reserved word: int
+For displaying the errors, I keep a count of the lines, and when we get an error a message is displayed showing the bad character and its line:
+    Error at token & at line 9
