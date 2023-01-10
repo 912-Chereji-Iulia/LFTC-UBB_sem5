@@ -1,3 +1,5 @@
+
+https://github.com/912-Chereji-Iulia/LFTC-UBB_sem5/tree/main/lab12
 %{
 #include <stdio.h>
 #include <string.h>
@@ -9,12 +11,9 @@ int nrLines = 0;
 %option noyywrap
 %option caseless
 
-digit [0-9]
-nonZeroDigit [1-9]
-intNr [+-]?{nonZeroDigit}{digit}*|0
-letter [a-zA-Z_]
-stringConst \"({letter}|{digit})*\"
-id {letter}({letter}|{digit})*
+intNr 0|[+-]*[1-9][0-9]*
+stringConst [a-zA-Z]*
+id [a-zA-Z]+[a-zA-Z0-9]*
 
 %%
 
@@ -24,7 +23,7 @@ id {letter}({letter}|{digit})*
 
 {stringConst}|{intNr} {printf( "Constant: %s\n", yytext ); }
 
-":"|"("|")"|"["|"]"|"#"|"\""	{printf( "Separator: %s\n", yytext ); }
+":"|"("|")"|"["|"]"|"#"|"\""|","    {printf( "Separator: %s\n", yytext ); }
 
 "+"|"-"|"*"|"/"|"<"|"$"|">"|"<="|">="|"=:="|"==>"|"<=>"|"=="|"^" {printf( "Operator: %s\n", yytext );}
 
@@ -48,7 +47,7 @@ The above code is in the lang.lxi file. For running it, I use the commands:
     gcc lex.yy.c -o mylex
 which will generate the executable mylex that will be used to run the program:
     ./mylex<"/Users/iuliachereji/Desktop/UNI WORK/Year3-sem1/LFTC/LFTC-UBB_sem5/lab12/Lab1a - p1.txt"
-The output of the program will look something like this, parsing the whole input file given for the lex and deciding if it is valid or not:
+Parsing the whole input file given for the lex and deciding if it is valid or not, the output of the program will look something like this:
     Reserved word: go
     Reserved word: variable
     Identifier: a

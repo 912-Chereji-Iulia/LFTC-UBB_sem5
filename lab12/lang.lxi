@@ -9,12 +9,9 @@ int nrLines = 0;
 %option noyywrap
 %option caseless
 
-digit [0-9]
-nonZeroDigit [1-9]
-intNr [+-]?{nonZeroDigit}{digit}*|0
-letter [a-zA-Z_]
-stringConst \"({letter}|{digit})*\"
-id {letter}({letter}|{digit})*
+intNr 0|[+-]*[1-9][0-9]*
+stringConst [a-zA-Z]*
+id [a-zA-Z]+[a-zA-Z0-9]*
 
 %%
 
@@ -24,7 +21,7 @@ id {letter}({letter}|{digit})*
 
 {stringConst}|{intNr} {printf( "Constant: %s\n", yytext ); }
 
-":"|"("|")"|"["|"]"|"#"|"\""	{printf( "Separator: %s\n", yytext ); }
+":"|"("|")"|"["|"]"|"#"|"\""|","	{printf( "Separator: %s\n", yytext ); }
 
 "+"|"-"|"*"|"/"|"<"|"$"|">"|"<="|">="|"=:="|"==>"|"<=>"|"=="|"^" {printf( "Operator: %s\n", yytext );}
 
