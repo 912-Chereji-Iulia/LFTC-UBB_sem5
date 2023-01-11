@@ -56,6 +56,8 @@ int yylex();
 %token SPACE
 %token NEWLINE
 %token ARROW_UP
+%token HASHTAG
+%token GHILIMEA
 
 %start program
 
