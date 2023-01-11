@@ -46,9 +46,19 @@ id [a-zA-Z]+[a-zA-Z0-9]*
 "," {printf( "Separator: %s\n", yytext ); return COMMA;}
 "\"" {printf( "Separator: %s\n", yytext ); return GHILIMEA;}
 
+"+" {printf( "Operator: %s\n", yytext ); return PLUS;}
+"-" {printf( "Operator: %s\n", yytext ); return MINUS;}
+"*" {printf( "Operator: %s\n", yytext ); return ORI;}
+"/" {printf( "Operator: %s\n", yytext ); return DIV;}
+"<" {printf( "Operator: %s\n", yytext ); return MAI_MIC;}
+">" {printf( "Operator: %s\n", yytext ); return MAI_MARE;}
+"<=" {printf( "Operator: %s\n", yytext ); return MAI_MIC_SAU_EGAL;}
+">=" {printf( "Operator: %s\n", yytext ); return MAI_MARE_SAU_EGAL;}
+"=:=" {printf( "Operator: %s\n", yytext ); return DIFERIT;}
+"==>" {printf( "Operator: %s\n", yytext ); return EGAL;}
+"<=>" {printf( "Operator: %s\n", yytext ); return ATTRIB;}
+"^" {printf( "Operator: %s\n", yytext ); return ARROW_UP;}
 
-
-"+"|"-"|"*"|"/"|"<"|"$"|">"|"<="|">="|"=:="|"==>"|"<=>"|"=="|"^" {printf( "Operator: %s\n", yytext ); addToPIFNotSymbols(yytext);}
 
 [\n]+ {nrLines++;}
 
