@@ -65,13 +65,13 @@ void yyerror(char *s);
 %start program
 
 %%
-program : GO NEWLINE cmpdstmt STOP 
+program : GO NEWLINE cmpdstmt
 	;
 
-cmpdstmt : stmt NEWLINE optionalCmpd 
+cmpdstmt : stmt NEWLINE optionalCmpd | STOP
     ;
 
-optionalCmpd : /*Empty*/ | cmpdstmt
+optionalCmpd : /*Empty*/ | cmpdstmt 
     ; 
 
 stmt : variable_declaration | vector_declaration | ifstmt | forstmt | iostmt | assignstmt 
