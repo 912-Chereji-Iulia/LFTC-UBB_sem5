@@ -5,8 +5,9 @@
 
 #define YYDEBUG 1
 
-int yylex();
 
+int yylex();
+void yyerror(char *s);
 
 %}
 %token GO
@@ -57,16 +58,21 @@ int yylex();
 %token NEWLINE
 %token ARROW_UP
 %token HASHTAG
+%token TAB
 %token GHILIMEA
+%token END_OF_FILE
 
 %start program
 
 %%
-program : GO cmpdstmt STOP
+program : GO NEWLINE cmpdstmt STOP 
 	;
 
-cmpdstmt : stmt NEWLINE [cmpd_stmt]
+cmpdstmt : stmt NEWLINE optionalCmpd 
     ;
+
+optionalCmpd : /*Empty*/ | cmpdstmt
+    ; 
 
 stmt : variable_declaration | vector_declaration | ifstmt | forstmt | iostmt | assignstmt 
     ;
@@ -74,40 +80,44 @@ stmt : variable_declaration | vector_declaration | ifstmt | forstmt | iostmt | a
 variable_declaration : VARIABLE ID ARROW_UP type
     ;
 
-type: INT | CHAR | STRING
+type: INT | CHAR | STRING 
     ;
 
-vector_declaration:  VECTOR ID PARANTEZA_DREAPTA_OPEN INT_CONST PARANTEZA_DREAPTA_CLOSE ATTRIB type
+vector_declaration:  VECTOR ID PARANTEZA_DREAPTA_OPEN INT_CONST PARANTEZA_DREAPTA_CLOSE ATTRIB type 
     ;
 
-ifstmt: IF condition COLON cmpd_stmt [ ELSE COLON cmpd_stmt]
+ifstmt: IF condition COLON NEWLINE cmpdstmt temp_if 
     ;
 
-condition: expression relation expression
+temp_if : /*Empty*/ | ELSE COLON NEWLINE cmpdstmt
     ;
 
-expression: expression (PLUS | MINUS) term | term 
+condition: expression relation expression 
     ;
 
-term: term (ORI | DIV) factor | factor 
+expression: expression PLUS term | expression MINUS term | term 
     ;
+
+term : term ORI factor | term DIV factor | term REST factor | factor 
+    ;
+
 
 factor: PARANTEZA_ROTUNDA_OPEN expression PARANTEZA_ROTUNDA_CLOSE | ID | INT_CONST
     ;
 
-relation: MAI_MIC | MAI_MIC_SAU_EGAL | EGAL | MAI_MARE_SAU_EGAL | MAI_MARE | DIFERIT | ATTRIB
+relation: MAI_MIC | MAI_MIC_SAU_EGAL | EGAL | MAI_MARE_SAU_EGAL | MAI_MARE | DIFERIT | ATTRIB 
     ;
 
-forstmt: FOR ID IN RANGE PARANTEZA_ROTUNDA_OPEN ID COMMA ID PARANTEZA_ROTUNDA_CLOSE COLON
+forstmt: FOR ID IN RANGE PARANTEZA_ROTUNDA_OPEN INT_CONST COMMA expression PARANTEZA_ROTUNDA_CLOSE COLON 
     ;
 
-iostmt: readstmt | writestmt
+iostmt: readstmt | writestmt 
     ;
 
-readstmt: ID ATTRIB INPUT PARANTEZA_ROTUNDA_OPEN STRING_CONST PARANTEZA_ROTUNDA_CLOSE
+readstmt: ID ATTRIB INPUT PARANTEZA_ROTUNDA_OPEN GHILIMEA ID GHILIMEA PARANTEZA_ROTUNDA_CLOSE 
     ;
 
-writestmt: DISPLAY PARANTEZA_ROTUNDA_OPEN ID PARANTEZA_ROTUNDA_CLOSE
+writestmt: DISPLAY PARANTEZA_ROTUNDA_OPEN ID PARANTEZA_ROTUNDA_CLOSE 
     ;
 
 assignstmt: ID ATTRIB expression
@@ -115,8 +125,13 @@ assignstmt: ID ATTRIB expression
 
 %%
 
+void yyerror(char *s)
+{   
+    printf("%s\n",s);
+}
 
 int main(int argc, char **argv)
 {
+    if(!yyparse()) fprintf(stderr, "\t syntactically correct.\n");
    
 }

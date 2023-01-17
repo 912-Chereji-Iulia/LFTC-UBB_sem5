@@ -1,9 +1,9 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "y.tab.h"
 
 int nrLines = 0;
-
 
 %}
 
@@ -33,7 +33,7 @@ id [a-zA-Z]+[a-zA-Z0-9]*
 
 {id} {printf( "Identifier: %s\n", yytext); return ID;}
 
-{stringConst} {printf( "Constant: %s\n", yytext ); return STRING_CONST;}
+{stringConst} {printf( "Constant: %s\n", yytext ); return STR_CONST;}
 
 {intNr} {printf( "Constant: %s\n", yytext ); return INT_CONST;}
 
@@ -50,6 +50,7 @@ id [a-zA-Z]+[a-zA-Z0-9]*
 "-" {printf( "Operator: %s\n", yytext ); return MINUS;}
 "*" {printf( "Operator: %s\n", yytext ); return ORI;}
 "/" {printf( "Operator: %s\n", yytext ); return DIV;}
+"%" {printf( "Operator: %s\n", yytext ); return REST;}
 "<" {printf( "Operator: %s\n", yytext ); return MAI_MIC;}
 ">" {printf( "Operator: %s\n", yytext ); return MAI_MARE;}
 "<=" {printf( "Operator: %s\n", yytext ); return MAI_MIC_SAU_EGAL;}
@@ -58,16 +59,12 @@ id [a-zA-Z]+[a-zA-Z0-9]*
 "==>" {printf( "Operator: %s\n", yytext ); return EGAL;}
 "<=>" {printf( "Operator: %s\n", yytext ); return ATTRIB;}
 "^" {printf( "Operator: %s\n", yytext ); return ARROW_UP;}
-
+"\n" {printf( "Operator: %s\n", yytext ); return NEWLINE;}
+"\t" {printf( "Operator: %s\n", yytext ); return TAB;}
+<<EOF>> {printf( "Operator: %s\n", yytext ); return END_OF_FILE;}
 
 [\n]+ {nrLines++;}
 
 [ ]+ {}
 
-. printf("Error on line %d\n", nrLines + 1);
-
 %%
-int main(int argc, char** argv) {
-    yyin = stdin;
-    yylex();
-}
