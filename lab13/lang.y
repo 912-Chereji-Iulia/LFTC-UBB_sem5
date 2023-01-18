@@ -26,11 +26,9 @@ void yyerror(char *s);
 %token DISPLAY
 %token VECTOR
 %token RANGE
-
 %token ID
 %token INT_CONST
 %token STR_CONST
-
 %token ATTRIB
 %token EGAL
 %token DIFERIT
@@ -39,19 +37,15 @@ void yyerror(char *s);
 %token MAI_MIC
 %token MAI_MARE
 %token NOT
-
-
 %token PLUS
 %token MINUS
 %token ORI
 %token DIV
 %token REST
-
 %token PARANTEZA_ROTUNDA_OPEN
 %token PARANTEZA_ROTUNDA_CLOSE
 %token PARANTEZA_DREAPTA_OPEN
 %token PARANTEZA_DREAPTA_CLOSE
-
 %token COMMA
 %token COLON
 %token SPACE
